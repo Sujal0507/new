@@ -1,0 +1,82 @@
+Imports System.Data.OleDb
+Public Class Form1
+    Dim con As New OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Users\Sujal Patel\Documents\exam1.mdb")
+    Dim cmd As New OleDbCommand
+    Dim ad As New OleDbDataAdapter
+    Dim ds As New DataSet
+
+    Sub Display()
+        con.Open()
+        cmd.CommandText = "select*from Table1"
+        cmd.Connection = con
+        ad.SelectCommand = cmd
+        cmd.ExecuteNonQuery()
+        ds.Clear()
+        ad.Fill(ds, 0)
+        DataGridView1.DataSource = ds.Tables(0)
+        con.Close()
+    End Sub
+    Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Display()
+    End Sub
+
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+        con.Open()
+        cmd.CommandText = "insert into Table1 values(@eid,@ename,@depart,@desig,@salary)"
+        cmd.Parameters.AddWithValue("@eid", Val(TextBox1.Text))
+        cmd.Parameters.AddWithValue("@ename", TextBox2.Text)
+        cmd.Parameters.AddWithValue("@depart", TextBox3.Text)
+        cmd.Parameters.AddWithValue("@design", TextBox4.Text)
+        cmd.Parameters.AddWithValue("@salary", Val(TextBox5.Text))
+        cmd.Connection = con
+        ad.SelectCommand = cmd
+        cmd.ExecuteNonQuery()
+        cmd.Parameters.Clear()
+        con.Close()
+        Display()
+        TextBox1.Clear()
+        TextBox2.Clear()
+        TextBox3.Clear()
+        TextBox4.Clear()
+        TextBox5.Clear()
+    End Sub
+
+    Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
+        con.Open()
+        cmd.CommandText = "delete from Table1 where eid=" & Val(TextBox1.Text)
+        cmd.Connection = con
+        ad.SelectCommand = cmd
+        cmd.ExecuteNonQuery()
+        con.Close()
+        Display()
+    End Sub
+
+    Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
+        con.Open()
+        cmd.CommandText = "update Table1 set emp_name=@ename,depart=@depart,desig=@design,salary=@salary where eid=" & Val(TextBox1.Text)
+        cmd.Parameters.AddWithValue("@ename", TextBox2.Text)
+        cmd.Parameters.AddWithValue("@depart", TextBox3.Text)
+        cmd.Parameters.AddWithValue("@design", TextBox4.Text)
+        cmd.Parameters.AddWithValue("@salary", Val(TextBox5.Text))
+        cmd.Connection = con
+        ad.SelectCommand = cmd
+        cmd.ExecuteNonQuery()
+        con.Close()
+        Display()
+    End Sub
+
+    Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
+        con.Open()
+        cmd.CommandText = "SELECT * FROM Table1 WHERE emp_name=@ename"
+        cmd.Parameters.AddWithValue("@ename", TextBox6.Text)
+        cmd.Connection = con
+        ad.SelectCommand = cmd
+        cmd.ExecuteNonQuery()
+        ds.Clear()
+        ad.Fill(ds, 0)
+        DataGridView1.DataSource = ds.Tables(0)
+        cmd.Parameters.Clear()
+        con.Close()
+
+    End Sub
+End Class
