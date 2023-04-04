@@ -1,6 +1,6 @@
 Imports System.Data.OleDb
 Public Class Form1
-    Dim con As New OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Users\Sujal Patel\Documents\exam1.mdb")
+    Dim con As New OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=")
     Dim cmd As New OleDbCommand
     Dim ad As New OleDbDataAdapter
     Dim ds As New DataSet
